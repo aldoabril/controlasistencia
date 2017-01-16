@@ -1,0 +1,18 @@
+
+body{
+    background-color: #D7E3EF;
+}
+
+.login-container {
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: -10px 10px 20px currentColor;
+    margin-top: 150px;
+    padding-top: 2px;
+    padding-bottom: 10px;
+    width: 350px; 
+}
+
+#text-center{    
+    margin-top: 5px;
+}
