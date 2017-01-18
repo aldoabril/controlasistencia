@@ -1,0 +1,140 @@
+-- CREATE DATABASE control-asistencias-bd
+
+CREATE TABLE tarjeta (
+                id INT NOT NULL,
+                password VARCHAR(16) NOT NULL,
+                PRIMARY KEY (id)
+)ENGINE=INNODB;
+
+
+CREATE TABLE agencia (
+                id INT NOT NULL,
+                direccion VARCHAR(50) NOT NULL,
+                PRIMARY KEY (id)
+)ENGINE=INNODB;
+
+
+CREATE TABLE marcador (
+                id INT NOT NULL,
+                agencia INT NOT NULL,
+                nombre VARCHAR(50) NOT NULL,
+                ip VARCHAR(15) NOT NULL,
+                PRIMARY KEY (id)
+)ENGINE=INNODB;
+
+
+CREATE TABLE cargo (
+                id INT NOT NULL,
+                nombre VARCHAR(50) NOT NULL,
+                PRIMARY KEY (id)
+)ENGINE=INNODB;
+
+
+CREATE TABLE empleado (
+                id INT NOT NULL,
+                cargo INT NOT NULL,
+                nombres VARCHAR(50) NOT NULL,                
+                apellidop VARCHAR(50) NOT NULL,
+                apellidom VARCHAR(50) NOT NULL,
+                dni VARCHAR(8) NOT NULL,
+                agencia INT NOT NULL,
+                tarjeta INT NOT NULL,
+                PRIMARY KEY (id)
+)ENGINE=INNODB;
+
+
+CREATE TABLE rol (
+                id INT NOT NULL,
+                nombre VARCHAR(50) NOT NULL,
+                PRIMARY KEY (id)
+)ENGINE=INNODB;
+
+
+CREATE TABLE usuario (
+                id INT NOT NULL,
+                login VARCHAR(50) NOT NULL,
+                password VARCHAR(100) NOT NULL,
+                rol INT NOT NULL,
+                PRIMARY KEY (id)
+)ENGINE=INNODB;
+
+
+CREATE TABLE horario (
+                id INT NOT NULL,
+                nombre VARCHAR(50) NOT NULL,
+                refrigerio BOOLEAN NOT NULL,
+                usuario INT NOT NULL,
+                PRIMARY KEY (id)
+)ENGINE=INNODB;
+
+
+CREATE TABLE dia (
+                id INT NOT NULL,
+                nombre VARCHAR(50) NOT NULL,
+                hora_en TIME NOT NULL,
+                hora_sa TIME NOT NULL,
+                hora_ren TIME NOT NULL,
+                hora_rsa TIME NOT NULL,
+                horario INT NOT NULL,
+                fecha DATE NOT NULL,
+                hora_en_real TIME NOT NULL,
+                hora_sa_real TIME NOT NULL,
+                hora_ren_real TIME NOT NULL,
+                hora_rsa_real TIME NOT NULL,
+                PRIMARY KEY (id)
+)ENGINE=INNODB;
+
+
+ALTER TABLE empleado ADD CONSTRAINT tarjeta_empleado_fk
+FOREIGN KEY (tarjeta)
+REFERENCES tarjeta (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE empleado ADD CONSTRAINT agencia_empleado_fk
+FOREIGN KEY (agencia)
+REFERENCES agencia (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE marcador ADD CONSTRAINT agencia_marcador_fk
+FOREIGN KEY (agencia)
+REFERENCES agencia (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE empleado ADD CONSTRAINT cargo_empleado_fk
+FOREIGN KEY (cargo)
+REFERENCES cargo (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE horario ADD CONSTRAINT empleado_horario_fk
+FOREIGN KEY (usuario)
+REFERENCES empleado (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE usuario ADD CONSTRAINT rol_usuario_fk
+FOREIGN KEY (rol)
+REFERENCES rol (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE horario ADD CONSTRAINT usuario_horario_fk
+FOREIGN KEY (usuario)
+REFERENCES usuario (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE dia ADD CONSTRAINT horario_dia_fk
+FOREIGN KEY (horario)
+REFERENCES horario (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE usuario ADD CONSTRAINT horario_usuario_fk
+FOREIGN KEY (rol)
+REFERENCES horario (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;

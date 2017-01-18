@@ -1,0 +1,20 @@
+Controller
+Los controladores, se comunican directamente con los servicios, estos reciben las peticiones del navegador, y ya es trabajo del servicio ver como resuelve dicha peticion
+
+Entity
+Cada tabla de la BD debe tener una clase Entitie es esta carpeta.
+
+Service
+Estos reciben las órdenes del controlador y manejan toda la lógica general del negocio, estos pueden hacer uso de cualquier repositorio, es por eso que no se comunican directamente con la BD.
+
+Repository
+Estos son los encargados de comunicarse directamente con la base de datos, aquí irían los tipicos CRUD a las diferentes tablas, pueden ir las consultas SELECT *....
+
+DTO
+(Data Transfer Object) que facilite el paso de información hacia las vistas de datos.
+
+Report
+Construcción de reportes y sus vistas respectivas.
+
+Exception
+Exceptions a utilizar durante el desarrollo y mantenimiento.

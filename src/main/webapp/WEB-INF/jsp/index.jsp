@@ -1,12 +1,9 @@
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-2"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%@include file="/WEB-INF/jsp/include/header.jsp" %>
+
+<section id="wrapper">    
+    
+</section>
+<%@include file="/WEB-INF/jsp/include/footer.jsp" %>

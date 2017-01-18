@@ -6,27 +6,27 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Acceso Control de Asistencias</title>
+        <title>Acceso</title>
         <link rel="stylesheet" href="${cp}/resources/css/bootstrap.min.css">
         <link rel="stylesheet" href="${cp}/resources/css/login.css">
     </head>
     <body>
         <div class="login-container jumbotron container-fluid">
-            <h1 class="text-center" id="text-center">Login</h1>
             <hr>
-            
+            <h3 class="text-center" id="text-center"><span class="glyphicon glyphicon-user"></span> Control de Asistencias </h3>            
+            <hr>
             <form method="POST" action="j_spring_security_check">
-                <div class="form-group">
-                    <label for="usuario" class="">Usuario</label>
+                <div class="form-group has-error">
+                    <label for="usuario" class="control-label">Usuario</label>
                     <input id="usuario" type="text" name="j_username" class="form-control" autofocus required/>
                 </div>
-                <div class="form-group">
+                <div class="form-group has-error">
                     <label for="password" class="control-label">Password</label>
                     <input id="password" type="password" name="j_password" class="form-control" required /><br>
                 </div>
                 <div class="text-center">
-                    <input type="submit" value="Ingresar" class="btn btn-success" />
-                    <input type="reset" value="Limpiar" class="btn btn-primary" />                    
+                    <input type="submit" value="Ingresar" class="btn btn-danger" />
+                    <input type="reset" value="Limpiar" class="btn btn-default" />                    
                 </div>
             </form>
         </div>
