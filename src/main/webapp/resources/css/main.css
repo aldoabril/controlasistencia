@@ -4,14 +4,32 @@
 }
 html, body {
     height: 100%;
-    background: #FFFFFF;
+    background: #DBEEFD;
 }
 
 #wrapper{  
     min-height: 60%;    
     height: auto !important;     
     clear: both;
-    background: #FFFFFF;   
+    background: #DBEEFD;   
+}
+
+#nuevo-empleado h3,#nuevo-empleado tbody td{
+    color: #D6564A;    
+}
+
+hr {
+border: 0 none #D6564A;
+border-top: 1px solid #D6564A;
+}
+
+#nuevo-empleado .table-hover tbody :hover{
+    background-color:  #333333;
+}
+
+#form-new{
+    background-color:#FFFFFF;
+    border-color: #D6564A;
 }
 
 .footer { 
@@ -224,14 +242,6 @@ html, body {
     font-weight: bold;  
 }
 
-#nuevo-empleado h3,#nuevo-empleado tbody td, #nuevo-empleado hr{
-    color: #D6564A;
-}
-
-#nuevo-empleado .table-hover tbody :hover{
-    background-color:  #333333;
-}
-
 #ubic-form-der{
     clear: right;
     float: right;   
@@ -247,10 +257,7 @@ html, body {
     float: left;   
 }
 
-#form-new{
-    background-color:#FFFFFF;
-    border-color: #D6564A;
-}
+
 
 #body-form label, #ubic-form-izq label, #data-cont label{
     color: #D6564A;

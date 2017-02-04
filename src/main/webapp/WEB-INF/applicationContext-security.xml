@@ -29,8 +29,8 @@
             <security:password-encoder hash="md5" />
             <security:jdbc-user-service 
                 data-source-ref="dataSource"
-                users-by-username-query="SELECT e.username AS username, e.password AS password, true AS enabled FROM empleado e WHERE e.username=? AND e.activo='0'"
-                authorities-by-username-query="SELECT e.username AS username, r.nombrerol AS role FROM empleado e INNER JOIN rol r ON r.idrol = e.idrol WHERE e.username=?"/>
+                users-by-username-query="SELECT u.username AS username, u.password AS password, true AS enabled FROM usuario u WHERE u.username=?"
+                authorities-by-username-query="SELECT u.username AS username, r.nombre AS role FROM usuario u INNER JOIN rol r ON r.id = u.rol WHERE u.username=?"/>
         </security:authentication-provider>        
     </security:authentication-manager>
 </beans>
