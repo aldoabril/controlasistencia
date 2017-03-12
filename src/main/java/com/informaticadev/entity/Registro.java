@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Registro.findAll", query = "SELECT r FROM Registro r"),
     @NamedQuery(name = "Registro.findById", query = "SELECT r FROM Registro r WHERE r.id = :id"),
     @NamedQuery(name = "Registro.findByFecha", query = "SELECT r FROM Registro r WHERE r.fecha = :fecha"),
+    @NamedQuery(name = "Registro.findByDia", query = "SELECT r FROM Registro r WHERE r.dia = :dia"),
     @NamedQuery(name = "Registro.findByHoraEnReal", query = "SELECT r FROM Registro r WHERE r.horaEnReal = :horaEnReal"),
     @NamedQuery(name = "Registro.findByHoraSaReal", query = "SELECT r FROM Registro r WHERE r.horaSaReal = :horaSaReal"),
     @NamedQuery(name = "Registro.findByHoraRenReal", query = "SELECT r FROM Registro r WHERE r.horaRenReal = :horaRenReal"),
@@ -50,6 +51,10 @@ public class Registro implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "dia")
+    private int dia;
     @Basic(optional = false)
     @NotNull
     @Column(name = "hora_en_real")
@@ -70,9 +75,9 @@ public class Registro implements Serializable {
     @Column(name = "hora_rsa_real")
     @Temporal(TemporalType.TIME)
     private Date horaRsaReal;
-    @JoinColumn(name = "dia_1", referencedColumnName = "id")
+    @JoinColumn(name = "empleado", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Dia dia1;
+    private Empleado empleado;
 
     public Registro() {
     }
@@ -81,9 +86,10 @@ public class Registro implements Serializable {
         this.id = id;
     }
 
-    public Registro(Integer id, Date fecha, Date horaEnReal, Date horaSaReal, Date horaRenReal, Date horaRsaReal) {
+    public Registro(Integer id, Date fecha, int dia, Date horaEnReal, Date horaSaReal, Date horaRenReal, Date horaRsaReal) {
         this.id = id;
         this.fecha = fecha;
+        this.dia = dia;
         this.horaEnReal = horaEnReal;
         this.horaSaReal = horaSaReal;
         this.horaRenReal = horaRenReal;
@@ -104,6 +110,14 @@ public class Registro implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public int getDia() {
+        return dia;
+    }
+
+    public void setDia(int dia) {
+        this.dia = dia;
     }
 
     public Date getHoraEnReal() {
@@ -138,12 +152,12 @@ public class Registro implements Serializable {
         this.horaRsaReal = horaRsaReal;
     }
 
-    public Dia getDia1() {
-        return dia1;
+    public Empleado getEmpleado() {
+        return empleado;
     }
 
-    public void setDia1(Dia dia1) {
-        this.dia1 = dia1;
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
 
     @Override

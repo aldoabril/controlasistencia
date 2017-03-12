@@ -8,14 +8,17 @@ package com.informaticadev.service;
 import com.informaticadev.dto.UsuarioDTO;
 import com.informaticadev.entity.Usuario;
 import com.informaticadev.exception.BusinessException;
+import com.informaticadev.util.Paginado;
 
-/**
- *
- * @author CARLOS
- */
 public interface UsuarioService extends BaseService<Usuario, Integer> {
 
     public Usuario BuscarUsuarioUsername(String username);
 
+    public Paginado getPaginationList(Integer page, Integer size, String search);
+
     public void guardarUsuario(UsuarioDTO UsuarioDTO) throws BusinessException;
+
+    public void actualizarUsuario(UsuarioDTO UsuarioDTO) throws BusinessException;
+    
+    public void eliminarUsuario(Integer id);
 }

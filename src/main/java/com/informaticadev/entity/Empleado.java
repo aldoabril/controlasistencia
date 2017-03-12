@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e"),
     @NamedQuery(name = "Empleado.findById", query = "SELECT e FROM Empleado e WHERE e.id = :id"),
-    @NamedQuery(name = "Empleado.findByPersCod", query = "SELECT e FROM Empleado e WHERE e.persCod = :persCod"),
+    @NamedQuery(name = "Empleado.findByPerscod", query = "SELECT e FROM Empleado e WHERE e.perscod = :perscod"),
     @NamedQuery(name = "Empleado.findByFechacreacion", query = "SELECT e FROM Empleado e WHERE e.fechacreacion = :fechacreacion"),
     @NamedQuery(name = "Empleado.findByFechaactualizacion", query = "SELECT e FROM Empleado e WHERE e.fechaactualizacion = :fechaactualizacion"),
     @NamedQuery(name = "Empleado.findByVigente", query = "SELECT e FROM Empleado e WHERE e.vigente = :vigente")})
@@ -52,8 +52,8 @@ public class Empleado implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "PersCod")
-    private String persCod;
+    @Column(name = "perscod")
+    private String perscod;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
@@ -69,21 +69,30 @@ public class Empleado implements Serializable {
     @Column(name = "vigente")
     private boolean vigente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
-    private List<Horario> horarioList;
-    @JoinColumn(name = "agencia", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Agencia agencia;
+    private List<EmpleadoAgencia> empleadoAgenciaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+    private List<HoraExtra> horaExtraList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+    private List<Registro> registroList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+    private List<Huella> huellaList;
     @JoinColumn(name = "cargo", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Cargo cargo;
     @JoinColumn(name = "idpersona", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Persona idpersona;
-    @JoinColumn(name = "tarjeta", referencedColumnName = "id")
+    @JoinColumn(name = "usuariocreador", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Tarjeta tarjeta;
+    private Usuario usuariocreador;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
     private List<Vacaciones> vacacionesList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+    private List<EmpleadoHorario> empleadoHorarioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+    private List<Permiso> permisoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+    private List<Tarjeta> tarjetaList;
 
     public Empleado() {
     }
@@ -92,9 +101,9 @@ public class Empleado implements Serializable {
         this.id = id;
     }
 
-    public Empleado(Integer id, String persCod, Date fechacreacion, Date fechaactualizacion, boolean vigente) {
+    public Empleado(Integer id, String perscod, Date fechacreacion, Date fechaactualizacion, boolean vigente) {
         this.id = id;
-        this.persCod = persCod;
+        this.perscod = perscod;
         this.fechacreacion = fechacreacion;
         this.fechaactualizacion = fechaactualizacion;
         this.vigente = vigente;
@@ -108,12 +117,12 @@ public class Empleado implements Serializable {
         this.id = id;
     }
 
-    public String getPersCod() {
-        return persCod;
+    public String getPerscod() {
+        return perscod;
     }
 
-    public void setPersCod(String persCod) {
-        this.persCod = persCod;
+    public void setPerscod(String perscod) {
+        this.perscod = perscod;
     }
 
     public Date getFechacreacion() {
@@ -141,20 +150,39 @@ public class Empleado implements Serializable {
     }
 
     @XmlTransient
-    public List<Horario> getHorarioList() {
-        return horarioList;
+    public List<EmpleadoAgencia> getEmpleadoAgenciaList() {
+        return empleadoAgenciaList;
     }
 
-    public void setHorarioList(List<Horario> horarioList) {
-        this.horarioList = horarioList;
+    public void setEmpleadoAgenciaList(List<EmpleadoAgencia> empleadoAgenciaList) {
+        this.empleadoAgenciaList = empleadoAgenciaList;
     }
 
-    public Agencia getAgencia() {
-        return agencia;
+    @XmlTransient
+    public List<HoraExtra> getHoraExtraList() {
+        return horaExtraList;
     }
 
-    public void setAgencia(Agencia agencia) {
-        this.agencia = agencia;
+    public void setHoraExtraList(List<HoraExtra> horaExtraList) {
+        this.horaExtraList = horaExtraList;
+    }
+
+    @XmlTransient
+    public List<Registro> getRegistroList() {
+        return registroList;
+    }
+
+    public void setRegistroList(List<Registro> registroList) {
+        this.registroList = registroList;
+    }
+
+    @XmlTransient
+    public List<Huella> getHuellaList() {
+        return huellaList;
+    }
+
+    public void setHuellaList(List<Huella> huellaList) {
+        this.huellaList = huellaList;
     }
 
     public Cargo getCargo() {
@@ -173,12 +201,12 @@ public class Empleado implements Serializable {
         this.idpersona = idpersona;
     }
 
-    public Tarjeta getTarjeta() {
-        return tarjeta;
+    public Usuario getUsuariocreador() {
+        return usuariocreador;
     }
 
-    public void setTarjeta(Tarjeta tarjeta) {
-        this.tarjeta = tarjeta;
+    public void setUsuariocreador(Usuario usuariocreador) {
+        this.usuariocreador = usuariocreador;
     }
 
     @XmlTransient
@@ -188,6 +216,33 @@ public class Empleado implements Serializable {
 
     public void setVacacionesList(List<Vacaciones> vacacionesList) {
         this.vacacionesList = vacacionesList;
+    }
+
+    @XmlTransient
+    public List<EmpleadoHorario> getEmpleadoHorarioList() {
+        return empleadoHorarioList;
+    }
+
+    public void setEmpleadoHorarioList(List<EmpleadoHorario> empleadoHorarioList) {
+        this.empleadoHorarioList = empleadoHorarioList;
+    }
+
+    @XmlTransient
+    public List<Permiso> getPermisoList() {
+        return permisoList;
+    }
+
+    public void setPermisoList(List<Permiso> permisoList) {
+        this.permisoList = permisoList;
+    }
+
+    @XmlTransient
+    public List<Tarjeta> getTarjetaList() {
+        return tarjetaList;
+    }
+
+    public void setTarjetaList(List<Tarjeta> tarjetaList) {
+        this.tarjetaList = tarjetaList;
     }
 
     @Override

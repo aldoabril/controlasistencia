@@ -39,8 +39,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="${cp}/mantenimiento/empleados/index.html">Empleados</a></li>
                                 <li><a href="${cp}/mantenimiento/horarios/index.html">Horarios</a></li>
-                                
-                                    <sec:authorize access="hasAnyRole('ADMIN')">
+                                    <sec:authorize access="hasAnyRole('ADMINISTRADOR')">
                                     <li role="separator" class="divider"></li>
                                     <li><a href="${cp}/mantenimiento/usuarios/index.html">Usuarios</a></li>
                                     </sec:authorize>
@@ -51,23 +50,19 @@
                             <ul class="dropdown-menu">
                                 <li><a href="${cp}/proceso/empleados/nuevo.html">Registrar Empleado</a></li>
                                 <li><a href="${cp}/proceso/horarios/nuevo.html">Registrar Horario</a></li>                                
-                                
-                                    <sec:authorize access="hasAnyRole('ADMIN')">
+
+                                <sec:authorize access="hasAnyRole('ADMINISTRADOR')">
                                     <li role="separator" class="divider"></li>
                                     <li><a href="${cp}/proceso/usuarios/nuevo.html">Registrar Usuario</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="${cp}/proceso/horarios/asignar.html">Asignar Horarios</a></li>
                                     </sec:authorize>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Consultas <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="${cp}/consulta/empleados/ver.html">Empleados</a></li>
-                                <li><a href="${cp}/consulta/horarios/ver.html">Horarios</a></li>
-                                                                
-                                    <sec:authorize access="hasAnyRole('ADMIN')">
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="${cp}/consulta/usuarios/ver.html">Usuarios</a></li>
-                                    </sec:authorize>                       
+                            <ul class="dropdown-menu">                                
+                                <li><a href="${cp}/consulta/horarios/ver.html">Horarios</a></li>                                                                    
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -75,8 +70,8 @@
                             <ul class="dropdown-menu">                                
                                 <li><a href="${cp}/reporte/empleados/reportes.html">Empleados</a></li>
                                 <li><a href="${cp}/reporte/horarios/reportes.html">Horarios</a></li>
-                                    
-                                    <sec:authorize access="hasAnyRole('ADMIN')">
+
+                                <sec:authorize access="hasAnyRole('ADMIN')">
                                     <li role="separator" class="divider"></li>
                                     <li><a href="${cp}/reporte/usuarios/reporte.html">Usuarios</a></li>
                                     </sec:authorize> 
@@ -100,4 +95,5 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+        <span style="font-size:14px;color:#000000;">&nbsp; Usuario: <sec:authentication property="principal.username"/></span>
 

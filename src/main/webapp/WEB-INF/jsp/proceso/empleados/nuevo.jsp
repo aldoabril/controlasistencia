@@ -1,8 +1,4 @@
-<%-- 
-    Document   : nuevo
-    Created on : 15/03/2016, 12:22:50 PM
-    Author     : CARLOS
---%>
+
 
 <%@page contentType="text/html" pageEncoding="ISO-8859-2"%>
 
@@ -18,7 +14,8 @@
                 <div class="panel-heading body-header"><center><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> FORMULARIO NUEVO EMPLEADO</center></div>
                 <div class="panel-body">                    
                     <form id="body-form" class="form-horizontal">
-                        <div class="form-group has-error">                               
+                        <div class="form-group has-error">    
+                            <input type="hidden" id="usercreador" name="usercreador" value="<sec:authentication property="principal.username"/>"/>                            
                             <label for="apellidoPat" class="control-label col-xs-1"> Ap.Paterno:</label>
                             <div class="col-xs-2">
                                 <input type="text" id="apellidoPat" name="apellidoPat" class="form-control" autofocus required/>
@@ -46,39 +43,35 @@
                                 <input type="text" id="fechanac" name="fechanac" class="form-control datepicker" onfocus="ConFocus()" onblur="SinFocus()" />
                             </div> 
 
-                            <label for="direccion" class="control-label col-xs-1">Direccion:</label>
+                            <label for="perscod" class="control-label col-xs-1">Cod.Pers</label>
                             <div class="col-xs-4">
-                                <input type="text" id="direccion" name="direccion" class="form-control" autofocus required/>
+                                <input type="text" id="perscod" name="perscod" class="form-control" autofocus required/>
                             </div> 
                         </div>                                                                                            
                         <hr>
 
                         <div class="form-group has-error">                               
-                            <label for="idCargo" class="control-label col-xs-1"> Cargo:</label>
-                            <div class="col-xs-3">                                
-                                <SELECT NAME="idCargo" id="idCargo" class="col-sm-12">
+                            <label for="cargo" class="control-label col-xs-1"> Cargo:</label>
+                            <div class="col-xs-4">                                
+                                <SELECT NAME="cargo" id="cargo" class="col-sm-12">
                                     <c:forEach var="c" items="${cargoItems}">
                                         <OPTION VALUE="${c.id}" class="form-control">${c.nombre}</OPTION>
                                         </c:forEach>
                                 </SELECT> 
                             </div> 
 
-                            <label for="idAgencia" class="control-label col-xs-1"> Agencia:</label>
-                            <div class="col-xs-3">                                
-                                <SELECT NAME="idAgencia" id="idAgencia" class="col-sm-12">
+                            <label for="agencia" class="control-label col-xs-1"> Agencia:</label>
+                            <div class="col-xs-4">                                
+                                <SELECT NAME="agencia" id="agencia" class="col-sm-12">
                                     <c:forEach var="a" items="${agenciaItems}">          
                                         <OPTION VALUE="${a.id}" class="form-control">${a.direccion}</OPTION>                                       
                                         </c:forEach>                               
                                 </SELECT> 
-                            </div> 
+                            </div>                                  
 
-                            <label for="idTarjeta" class="control-label col-xs-1"> Tarjeta:</label>
-                            <div class="col-xs-3">
-                                <input type="text" id="idTarjeta" name="idTarjeta" class="form-control" autofocus required/>
-                            </div>                                                           
                         </div>
                         <hr>
-                        <div class="text-center">                                                       
+                        <div class="text-center" id="btns-guardarEmpleado">                                                       
                             <input type="reset" value="Limpiar" class=" btn btn-default"/>
                             <input type="submit" value="Guardar" class=" btn btn-danger"/>                           
                         </div>
@@ -87,8 +80,11 @@
                     <p id="error-message" class="alert alert-danger" style="display: none;"></p>
                 </div>
             </div>
-        </div>        
+        </div>   
     </div>
 </div>                     
 <%@include file="/WEB-INF/jsp/include/footer.jsp" %>
-
+<script>
+    var path = '${cp}/proceso/empleados/';
+</script>
+<script src="${cp}/resources/js/proceso/empleados.js"></script>

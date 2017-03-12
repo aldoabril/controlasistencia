@@ -29,8 +29,7 @@ public class AgenciaServiceImpl extends BaseServiceImpl<Agencia, Integer>
     }
 
     @Override
-    public List<Agencia> ListaAgencias() {
-        System.out.println("AgenciaServiceImpl");
+    public List<Agencia> ListaAgencias() {        
         return AgenciaRepository.listarTodasAgencias();
     }
 

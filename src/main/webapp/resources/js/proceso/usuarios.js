@@ -62,10 +62,6 @@ function isFormValid() {
         return false;
     }
 
-    if (!isTextValid($("#direccion").val())) {
-        showError("Debe ingresar la dirección.");
-        return false;
-    }
     return true;
 }
 
@@ -84,12 +80,14 @@ function fillForm(data) {
     $("#apellidoMat").val(data.apellidoMat);
     $("#nombres").val(data.nombres);
     $("#fechanac").val(data.fechanac);
-    $("#direccion").val(data.direccion);
+    // $("#direccion").val(data.direccion);
+    $("#idpersona").val(data.idpersona);
 }
 
 function GuardarUsuario() {
     if (isFormValid()) {
         var form = $("#body-form").jsonify();
+        //alert(JSON.stringify(form));
         $.ajax({
             url: path + "guardar" + ".json",
             type: 'POST',

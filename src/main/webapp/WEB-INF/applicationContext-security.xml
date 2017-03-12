@@ -22,7 +22,7 @@
             <security:password-encoder hash="md5" />
             <security:user-service>
                 <security:user name="admin" password="21232f297a57a5a743894a0e4a801fc3"
-                        authorities="USER,ADMIN" />
+                        authorities="ADMINISTRADOR" />
             </security:user-service>
         </security:authentication-provider>       
         <security:authentication-provider>

@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -36,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Horario.findAll", query = "SELECT h FROM Horario h"),
     @NamedQuery(name = "Horario.findById", query = "SELECT h FROM Horario h WHERE h.id = :id"),
     @NamedQuery(name = "Horario.findByNombre", query = "SELECT h FROM Horario h WHERE h.nombre = :nombre"),
-    @NamedQuery(name = "Horario.findByRefrigerio", query = "SELECT h FROM Horario h WHERE h.refrigerio = :refrigerio")})
+    @NamedQuery(name = "Horario.findByRefrigerio", query = "SELECT h FROM Horario h WHERE h.refrigerio = :refrigerio"),
+    @NamedQuery(name = "Horario.findByVigente", query = "SELECT h FROM Horario h WHERE h.vigente = :vigente")})
 public class Horario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,9 +52,12 @@ public class Horario implements Serializable {
     @NotNull
     @Column(name = "refrigerio")
     private boolean refrigerio;
-    @JoinColumn(name = "empleado", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Empleado empleado;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "vigente")
+    private boolean vigente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "horario")
+    private List<EmpleadoHorario> empleadoHorarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "horario")
     private List<Dia> diaList;
 
@@ -66,10 +68,20 @@ public class Horario implements Serializable {
         this.id = id;
     }
 
-    public Horario(Integer id, String nombre, boolean refrigerio) {
+    public Horario(Integer id, String nombre, boolean refrigerio, boolean vigente) {
         this.id = id;
         this.nombre = nombre;
         this.refrigerio = refrigerio;
+        this.vigente = vigente;
+    }
+    
+    public Horario(String nombre, boolean refrigerio, boolean vigente) {
+        this.nombre = nombre;
+        this.refrigerio = refrigerio;
+        this.vigente = vigente;
+    }
+    public Horario(String nombre) {
+        this.nombre = nombre;
     }
 
     public Integer getId() {
@@ -96,12 +108,21 @@ public class Horario implements Serializable {
         this.refrigerio = refrigerio;
     }
 
-    public Empleado getEmpleado() {
-        return empleado;
+    public boolean getVigente() {
+        return vigente;
     }
 
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
+    public void setVigente(boolean vigente) {
+        this.vigente = vigente;
+    }
+
+    @XmlTransient
+    public List<EmpleadoHorario> getEmpleadoHorarioList() {
+        return empleadoHorarioList;
+    }
+
+    public void setEmpleadoHorarioList(List<EmpleadoHorario> empleadoHorarioList) {
+        this.empleadoHorarioList = empleadoHorarioList;
     }
 
     @XmlTransient

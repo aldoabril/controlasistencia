@@ -1,9 +1,3 @@
-<%-- 
-    Document   : nuevo
-    Created on : 20/01/2017, 03:24:36 PM
-    Author     : CARLOS
---%>
-
 <%@page contentType="text/html" pageEncoding="ISO-8859-2"%>
 
 <%@include file="/WEB-INF/jsp/include/header.jsp" %>
@@ -18,7 +12,8 @@
                 <div class="panel-heading body-header"><center><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> FORMULARIO NUEVO USUARIO</center></div>
                 <div class="panel-body">                    
                     <form id="body-form" class="form-horizontal">
-                        <div class="form-group has-error">  
+                        <div class="form-group has-error">
+                            <input type="hidden" id="idpersona" name="idpersona"/>
                             <label for="dni" class="control-label col-xs-offset-2 col-xs-3">DNI:</label>                           
                             <div class="col-xs-2">
                                 <input type="text" id="dni" name="dni" class="form-control" maxlength="8" autofocus required/>
@@ -46,13 +41,9 @@
                         <div class="form-group has-error">                            
                             <label for="fechanac" class="control-label col-xs-1">Fech-Nac:</label>
                             <div class="col-xs-2">
-                                <input type="text" id="fechanac" name="fechanac" class="form-control datepicker" onfocus="ConFocus()" onblur="SinFocus()" />
+                                <input type="text" id="fechanac" name="fechanac" class="form-control datepicker"/>
                             </div> 
 
-                            <label for="direccion" class="control-label col-xs-1">Direccion:</label>
-                            <div class="col-xs-7">
-                                <input type="text" id="direccion" name="direccion" class="form-control" autofocus required/>
-                            </div> 
                         </div>                                                                                            
                         <hr>
 
@@ -60,8 +51,9 @@
                             <label for="rol" class="control-label col-xs-1"> Rol:</label>
                             <div class="col-xs-3">                                
                                 <SELECT NAME="rol" id="rol" class="col-sm-12">
-                                    <OPTION VALUE=1 class="form-control">ADMINISTRADOR</OPTION>
-                                    <OPTION VALUE=2 class="form-control" selected>EMPLEADO</OPTION>                                            
+                                    <c:forEach var="r" items="${rolItems}">
+                                        <OPTION VALUE="${r.id}" class="form-control">${r.nombre}</OPTION>
+                                        </c:forEach>                                           
                                 </SELECT>                                                               
                             </div>                                                                                    
 

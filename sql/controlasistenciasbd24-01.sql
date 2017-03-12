@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `agencia`;
 CREATE TABLE `agencia` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `direccion` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -30,7 +30,7 @@ CREATE TABLE `agencia` (
 -- ----------------------------
 DROP TABLE IF EXISTS `asistencia`;
 CREATE TABLE `asistencia` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `dia` int(11) NOT NULL,
   `entrada` time NOT NULL,
   `salida` time NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `asistencia` (
 -- ----------------------------
 DROP TABLE IF EXISTS `cargo`;
 CREATE TABLE `cargo` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -56,7 +56,7 @@ CREATE TABLE `cargo` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dia`;
 CREATE TABLE `dia` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` char(1) NOT NULL,
   `horaEn` time NOT NULL,
   `horaSa` time NOT NULL,
@@ -74,9 +74,9 @@ CREATE TABLE `dia` (
 -- ----------------------------
 DROP TABLE IF EXISTS `empleado`;
 CREATE TABLE `empleado` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `cargo` int(11) NOT NULL,
-  `PersCod` varchar(50) NOT NULL,
+  `perscod` varchar(50) NOT NULL,
   `fechacreacion` datetime NOT NULL,
   `fechaactualizacion` datetime NOT NULL,
   `vigente` tinyint(1) NOT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE `empleado` (
 -- ----------------------------
 DROP TABLE IF EXISTS `empleado_agencia`;
 CREATE TABLE `empleado_agencia` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `empleado` int(11) NOT NULL,
   `agencia` int(11) NOT NULL,
   `fechacreacion` datetime NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE `empleado_agencia` (
 -- ----------------------------
 DROP TABLE IF EXISTS `empleado_horario`;
 CREATE TABLE `empleado_horario` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `empleado` int(11) NOT NULL,
   `horario` int(11) NOT NULL,
   `fechacreado` datetime NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE `empleado_horario` (
 -- ----------------------------
 DROP TABLE IF EXISTS `horario`;
 CREATE TABLE `horario` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   `refrigerio` tinyint(1) NOT NULL,
   `vigente` tinyint(1) NOT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE `horario` (
 -- ----------------------------
 DROP TABLE IF EXISTS `hora_extra`;
 CREATE TABLE `hora_extra` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `empleado` int(11) NOT NULL,
   `dia` int(11) NOT NULL,
   `tiempoextr` time NOT NULL,
@@ -161,7 +161,7 @@ CREATE TABLE `hora_extra` (
 -- ----------------------------
 DROP TABLE IF EXISTS `huella`;
 CREATE TABLE `huella` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `fechacrea` datetime NOT NULL,
   `fechaact` datetime NOT NULL,
   `codigo` varchar(50) NOT NULL,
@@ -176,7 +176,7 @@ CREATE TABLE `huella` (
 -- ----------------------------
 DROP TABLE IF EXISTS `marcador`;
 CREATE TABLE `marcador` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `agencia` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `ip` varchar(50) NOT NULL,
@@ -191,7 +191,7 @@ CREATE TABLE `marcador` (
 -- ----------------------------
 DROP TABLE IF EXISTS `perfilvacaciones`;
 CREATE TABLE `perfilvacaciones` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `fechainicio` date NOT NULL,
   `fechafin` date NOT NULL,
   PRIMARY KEY (`id`)
@@ -202,7 +202,7 @@ CREATE TABLE `perfilvacaciones` (
 -- ----------------------------
 DROP TABLE IF EXISTS `permiso`;
 CREATE TABLE `permiso` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `empleado` int(11) NOT NULL,
   `dia` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -217,11 +217,12 @@ CREATE TABLE `permiso` (
 -- ----------------------------
 DROP TABLE IF EXISTS `persona`;
 CREATE TABLE `persona` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `dni` varchar(8) NOT NULL,
   `nombres` varchar(50) NOT NULL,
   `apellidop` varchar(50) NOT NULL,
   `apellidom` varchar(50) NOT NULL,
+  `fechanac` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `dni` (`dni`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -231,7 +232,7 @@ CREATE TABLE `persona` (
 -- ----------------------------
 DROP TABLE IF EXISTS `registro`;
 CREATE TABLE `registro` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` datetime NOT NULL,
   `dia` int(11) NOT NULL,
   `hora_en_real` time NOT NULL,
@@ -249,7 +250,7 @@ CREATE TABLE `registro` (
 -- ----------------------------
 DROP TABLE IF EXISTS `rol`;
 CREATE TABLE `rol` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -259,7 +260,7 @@ CREATE TABLE `rol` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tarjeta`;
 CREATE TABLE `tarjeta` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `password` varchar(50) NOT NULL,
   `fechacreacion` datetime NOT NULL,
   `fechaactualizacion` datetime NOT NULL,
@@ -274,9 +275,9 @@ CREATE TABLE `tarjeta` (
 -- ----------------------------
 DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
-  `id` int(11) NOT NULL,
-  `login` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(200) NOT NULL,
   `rol` int(11) NOT NULL,
   `idpersona` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -291,7 +292,7 @@ CREATE TABLE `usuario` (
 -- ----------------------------
 DROP TABLE IF EXISTS `vacaciones`;
 CREATE TABLE `vacaciones` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `perfil` int(11) NOT NULL,
   `empleado` int(11) NOT NULL,
   `estado` tinyint(4) NOT NULL,

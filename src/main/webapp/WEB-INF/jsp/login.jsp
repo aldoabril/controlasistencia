@@ -28,6 +28,8 @@
                     <input type="submit" value="Ingresar" class="btn btn-danger" />
                     <input type="reset" value="Limpiar" class="btn btn-default" />                    
                 </div>
+                <br>
+                <a href="index.html" class="btn btn-default btn-lg" role="button">Enlace Directo</a>
             </form>
         </div>
         <c:if test="${not empty error}">

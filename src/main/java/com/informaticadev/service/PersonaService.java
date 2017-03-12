@@ -6,7 +6,6 @@
 package com.informaticadev.service;
 
 import com.informaticadev.entity.Persona;
-import com.informaticadev.util.Paginado;
 
 /**
  *

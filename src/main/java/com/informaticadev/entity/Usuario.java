@@ -6,7 +6,9 @@
 package com.informaticadev.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,10 +18,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -47,9 +51,13 @@ public class Usuario implements Serializable {
     private String username;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 200)
     @Column(name = "password")
     private String password;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariocreador")
+    private List<Empleado> empleadoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<EmpleadoHorario> empleadoHorarioList;
     @JoinColumn(name = "idpersona", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Persona idpersona;
@@ -92,6 +100,24 @@ public class Usuario implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @XmlTransient
+    public List<Empleado> getEmpleadoList() {
+        return empleadoList;
+    }
+
+    public void setEmpleadoList(List<Empleado> empleadoList) {
+        this.empleadoList = empleadoList;
+    }
+
+    @XmlTransient
+    public List<EmpleadoHorario> getEmpleadoHorarioList() {
+        return empleadoHorarioList;
+    }
+
+    public void setEmpleadoHorarioList(List<EmpleadoHorario> empleadoHorarioList) {
+        this.empleadoHorarioList = empleadoHorarioList;
     }
 
     public Persona getIdpersona() {

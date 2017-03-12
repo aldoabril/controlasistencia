@@ -25,7 +25,6 @@ public class UsuarioDTO {
     private String nombres;
     private String apellidoPat;
     private String apellidoMat;
-    private String direccion;
     private String fechanac;
     private String nombrerol;
 
@@ -38,21 +37,30 @@ public class UsuarioDTO {
         this.username = u.getUsername();
         this.password = u.getPassword();
         this.rol = u.getRol().getId();
+        this.nombrerol = u.getRol().getNombre();
         this.idpersona = u.getIdpersona().getId();
         this.nombres = u.getIdpersona().getNombres();
         this.apellidoPat = u.getIdpersona().getApellidop();
         this.apellidoMat = u.getIdpersona().getApellidom();
-        this.direccion = u.getIdpersona().getDireccion();
         this.fechanac = Helper.formatDate(u.getIdpersona().getFechanac());
     }
 
     public UsuarioDTO(Persona p) {
+        this.idpersona = p.getId();
         this.dni = p.getDni();
         this.nombres = p.getNombres();
         this.apellidoPat = p.getApellidop();
         this.apellidoMat = p.getApellidom();
-        this.direccion = p.getDireccion();
         this.fechanac = Helper.formatDate(p.getFechanac());
+    }
+
+    public void passValuesForUpdate(Persona persona) {
+        persona.setDni(dni);
+        persona.setApellidop(apellidoPat);
+        persona.setApellidom(apellidoMat);
+        persona.setNombres(nombres);
+        persona.setFechanac(Helper.parseDate(fechanac));
+
     }
 
     public Integer getId() {
@@ -127,14 +135,6 @@ public class UsuarioDTO {
         this.apellidoMat = apellidoMat;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
     public String getFechanac() {
         return fechanac;
     }
@@ -153,11 +153,11 @@ public class UsuarioDTO {
 
     public Persona getPersona() {
         Persona persona = new Persona();
+        persona.setId(idpersona);
         persona.setDni(dni);
         persona.setApellidop(apellidoPat);
         persona.setApellidom(apellidoMat);
         persona.setNombres(nombres);
-        persona.setDireccion(direccion);
         persona.setFechanac(Helper.parseDate(fechanac));
         return persona;
     }
@@ -167,11 +167,6 @@ public class UsuarioDTO {
         r.setId(rol);
         r.setNombre(nombrerol);
         return r;
-    }
-
-    @Override
-    public String toString() {
-        return "UsuarioDTO{" + "id=" + id + ", dni=" + dni + ", username=" + username + ", password=" + password + ", idrol=" + rol + ", idpersona=" + idpersona + ", nombres=" + nombres + ", apellidoPat=" + apellidoPat + ", apellidoMat=" + apellidoMat + ", direccion=" + direccion + ", fechanac=" + fechanac + ", nombrerol=" + nombrerol + '}';
     }
 
 }

@@ -47,9 +47,9 @@ public class Agencia implements Serializable {
     @Column(name = "direccion")
     private String direccion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "agencia")
-    private List<Marcador> marcadorList;
+    private List<EmpleadoAgencia> empleadoAgenciaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "agencia")
-    private List<Empleado> empleadoList;
+    private List<Marcador> marcadorList;
 
     public Agencia() {
     }
@@ -80,21 +80,21 @@ public class Agencia implements Serializable {
     }
 
     @XmlTransient
+    public List<EmpleadoAgencia> getEmpleadoAgenciaList() {
+        return empleadoAgenciaList;
+    }
+
+    public void setEmpleadoAgenciaList(List<EmpleadoAgencia> empleadoAgenciaList) {
+        this.empleadoAgenciaList = empleadoAgenciaList;
+    }
+
+    @XmlTransient
     public List<Marcador> getMarcadorList() {
         return marcadorList;
     }
 
     public void setMarcadorList(List<Marcador> marcadorList) {
         this.marcadorList = marcadorList;
-    }
-
-    @XmlTransient
-    public List<Empleado> getEmpleadoList() {
-        return empleadoList;
-    }
-
-    public void setEmpleadoList(List<Empleado> empleadoList) {
-        this.empleadoList = empleadoList;
     }
 
     @Override

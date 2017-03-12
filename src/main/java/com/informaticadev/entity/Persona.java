@@ -40,7 +40,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Persona.findByNombres", query = "SELECT p FROM Persona p WHERE p.nombres = :nombres"),
     @NamedQuery(name = "Persona.findByApellidop", query = "SELECT p FROM Persona p WHERE p.apellidop = :apellidop"),
     @NamedQuery(name = "Persona.findByApellidom", query = "SELECT p FROM Persona p WHERE p.apellidom = :apellidom"),
-    @NamedQuery(name = "Persona.findByDireccion", query = "SELECT p FROM Persona p WHERE p.direccion = :direccion"),
     @NamedQuery(name = "Persona.findByFechanac", query = "SELECT p FROM Persona p WHERE p.fechanac = :fechanac")})
 public class Persona implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -71,11 +70,6 @@ public class Persona implements Serializable {
     private String apellidom;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "direccion")
-    private String direccion;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "fechanac")
     @Temporal(TemporalType.DATE)
     private Date fechanac;
@@ -91,13 +85,12 @@ public class Persona implements Serializable {
         this.id = id;
     }
 
-    public Persona(Integer id, String dni, String nombres, String apellidop, String apellidom, String direccion, Date fechanac) {
+    public Persona(Integer id, String dni, String nombres, String apellidop, String apellidom, Date fechanac) {
         this.id = id;
         this.dni = dni;
         this.nombres = nombres;
         this.apellidop = apellidop;
         this.apellidom = apellidom;
-        this.direccion = direccion;
         this.fechanac = fechanac;
     }
 
@@ -139,14 +132,6 @@ public class Persona implements Serializable {
 
     public void setApellidom(String apellidom) {
         this.apellidom = apellidom;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public Date getFechanac() {

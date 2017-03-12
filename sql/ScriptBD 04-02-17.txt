@@ -1,0 +1,300 @@
+-- ----------------------------
+-- Table structure for agencia
+-- ----------------------------
+DROP TABLE IF EXISTS `agencia`;
+CREATE TABLE `agencia` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `direccion` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for cargo
+-- ----------------------------
+DROP TABLE IF EXISTS `cargo`;
+CREATE TABLE `cargo` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for horario
+-- ----------------------------
+DROP TABLE IF EXISTS `horario`;
+CREATE TABLE `horario` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) NOT NULL,
+  `refrigerio` TINYINT(1) NOT NULL,
+  `vigente` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for marcador
+-- ----------------------------
+DROP TABLE IF EXISTS `marcador`;
+CREATE TABLE `marcador` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `agencia` INT(11) NOT NULL,
+  `nombre` VARCHAR(50) NOT NULL,
+  `ip` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ip` (`ip`),
+  KEY `agencia_marcador_fk` (`agencia`),
+  CONSTRAINT `agencia_marcador_fk` FOREIGN KEY (`agencia`) REFERENCES `agencia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for perfilvacaciones
+-- ----------------------------
+DROP TABLE IF EXISTS `perfilvacaciones`;
+CREATE TABLE `perfilvacaciones` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `fechainicio` DATE NOT NULL,
+  `fechafin` DATE NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+-- ----------------------------
+-- Table structure for perfilvacaciones
+-- ----------------------------
+DROP TABLE IF EXISTS `perfilvacaciones`;
+CREATE TABLE `perfilvacaciones` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `fechainicio` DATE NOT NULL,
+  `fechafin` DATE NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for persona
+-- ----------------------------
+DROP TABLE IF EXISTS `persona`;
+CREATE TABLE `persona` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `dni` VARCHAR(8) NOT NULL,
+  `nombres` VARCHAR(50) NOT NULL,
+  `apellidop` VARCHAR(50) NOT NULL,
+  `apellidom` VARCHAR(50) NOT NULL,
+  `fechanac` DATE NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `dni` (`dni`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for rol
+-- ----------------------------
+DROP TABLE IF EXISTS `rol`;
+CREATE TABLE `rol` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- ----------------------------
+-- Table structure for usuario
+-- ----------------------------
+DROP TABLE IF EXISTS `usuario`;
+CREATE TABLE `usuario` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(50) NOT NULL,
+  `password` VARCHAR(200) NOT NULL,
+  `rol` INT(11) NOT NULL,
+  `idpersona` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `persona_usuario_fk` (`idpersona`),
+  KEY `rol_usuario_fk` (`rol`),
+  CONSTRAINT `rol_usuario_fk` FOREIGN KEY (`rol`) REFERENCES `rol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `persona_usuario_fk` FOREIGN KEY (`idpersona`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for empleado
+-- ----------------------------
+DROP TABLE IF EXISTS `empleado`;
+CREATE TABLE `empleado` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cargo` INT(11) NOT NULL,
+  `perscod` VARCHAR(50) NOT NULL,
+  `fechacreacion` DATETIME NOT NULL,
+  `fechaactualizacion` DATETIME NOT NULL,
+  `vigente` TINYINT(1) NOT NULL,
+  `idpersona` INT(11) NOT NULL,
+  `usuariocreador` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `persona_empleado_fk` (`idpersona`),
+  KEY `cargo_empleado_fk` (`cargo`),
+  KEY `usuario_empleado_fk` (`usuariocreador`),
+  CONSTRAINT `usuario_empleado_fk` FOREIGN KEY (`usuariocreador`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `cargo_empleado_fk` FOREIGN KEY (`cargo`) REFERENCES `cargo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `persona_empleado_fk` FOREIGN KEY (`idpersona`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for empleado_agencia
+-- ----------------------------
+DROP TABLE IF EXISTS `empleado_agencia`;
+CREATE TABLE `empleado_agencia` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `empleado` INT(11) NOT NULL,
+  `agencia` INT(11) NOT NULL,
+  `fechacreacion` DATETIME NOT NULL,
+  `fechaact` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `agencia_empleado_agencia_fk` (`agencia`),
+  KEY `empleado_empleado_agencia_fk` (`empleado`),
+  CONSTRAINT `empleado_empleado_agencia_fk` FOREIGN KEY (`empleado`) REFERENCES `empleado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `agencia_empleado_agencia_fk` FOREIGN KEY (`agencia`) REFERENCES `agencia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for empleado_horario
+-- ----------------------------
+DROP TABLE IF EXISTS `empleado_horario`;
+CREATE TABLE `empleado_horario` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `empleado` INT(11) NOT NULL,
+  `horario` INT(11) NOT NULL,
+  `fechacreado` DATETIME NOT NULL,
+  `fechaact` DATETIME NOT NULL,
+  `usuario` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `horario_empleado_horario_fk` (`horario`),
+  KEY `usuario_empleado_horario_fk` (`usuario`),
+  KEY `empleado_empleado_horario_fk` (`empleado`),
+  CONSTRAINT `empleado_empleado_horario_fk` FOREIGN KEY (`empleado`) REFERENCES `empleado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `horario_empleado_horario_fk` FOREIGN KEY (`horario`) REFERENCES `horario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `usuario_empleado_horario_fk` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for huella
+-- ----------------------------
+DROP TABLE IF EXISTS `huella`;
+CREATE TABLE `huella` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `fechacrea` DATETIME NOT NULL,
+  `fechaact` DATETIME NOT NULL,
+  `codigo` VARCHAR(50) NOT NULL,
+  `empleado` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `empleado_huella_fk` (`empleado`),
+  CONSTRAINT `empleado_huella_fk` FOREIGN KEY (`empleado`) REFERENCES `empleado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for registro
+-- ----------------------------
+DROP TABLE IF EXISTS `registro`;
+CREATE TABLE `registro` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `fecha` DATETIME NOT NULL,
+  `dia` INT(11) NOT NULL,
+  `hora_en_real` TIME NOT NULL,
+  `hora_sa_real` TIME NOT NULL,
+  `hora_ren_real` TIME NOT NULL,
+  `hora_rsa_real` TIME NOT NULL,
+  `empleado` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `empleado_registro_fk` (`empleado`),
+  CONSTRAINT `empleado_registro_fk` FOREIGN KEY (`empleado`) REFERENCES `empleado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for tarjeta
+-- ----------------------------
+DROP TABLE IF EXISTS `tarjeta`;
+CREATE TABLE `tarjeta` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `password` VARCHAR(50) NOT NULL,
+  `fechacreacion` DATETIME NOT NULL,
+  `fechaactualizacion` DATETIME NOT NULL,
+  `empleado` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `empleado_tarjeta_fk` (`empleado`),
+  CONSTRAINT `empleado_tarjeta_fk` FOREIGN KEY (`empleado`) REFERENCES `empleado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for vacaciones
+-- ----------------------------
+DROP TABLE IF EXISTS `vacaciones`;
+CREATE TABLE `vacaciones` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `perfil` INT(11) NOT NULL,
+  `empleado` INT(11) NOT NULL,
+  `estado` TINYINT(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `perfilvacaciones_vacaciones_fk` (`perfil`),
+  KEY `empleado_vacaciones_fk` (`empleado`),
+  CONSTRAINT `empleado_vacaciones_fk` FOREIGN KEY (`empleado`) REFERENCES `empleado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `perfilvacaciones_vacaciones_fk` FOREIGN KEY (`perfil`) REFERENCES `perfilvacaciones` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for dia
+-- ----------------------------
+DROP TABLE IF EXISTS `dia`;
+CREATE TABLE `dia` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` CHAR(1) NOT NULL,
+  `horaEn` TIME NOT NULL,
+  `horaSa` TIME NOT NULL,
+  `hora_ren` TIME NOT NULL,
+  `hora_rsa` TIME NOT NULL,
+  `fecha` DATE NOT NULL,
+  `horario` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `horario_dia_fk` (`horario`),
+  CONSTRAINT `horario_dia_fk` FOREIGN KEY (`horario`) REFERENCES `horario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for asistencia
+-- ----------------------------
+DROP TABLE IF EXISTS `asistencia`;
+CREATE TABLE `asistencia` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `dia` INT(11) NOT NULL,
+  `entrada` TIME NOT NULL,
+  `salida` TIME NOT NULL,
+  `refrigerioen` TIME NOT NULL,
+  `refrigeriosa` TIME NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dia_asistencia_fk` (`dia`),
+  CONSTRAINT `dia_asistencia_fk` FOREIGN KEY (`dia`) REFERENCES `dia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for hora_extra
+-- ----------------------------
+DROP TABLE IF EXISTS `hora_extra`;
+CREATE TABLE `hora_extra` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `empleado` INT(11) NOT NULL,
+  `dia` INT(11) NOT NULL,
+  `tiempoextr` TIME NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dia_hora_extra_fk` (`dia`),
+  KEY `empleado_hora_extra_fk` (`empleado`),
+  CONSTRAINT `empleado_hora_extra_fk` FOREIGN KEY (`empleado`) REFERENCES `empleado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `dia_hora_extra_fk` FOREIGN KEY (`dia`) REFERENCES `dia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for permiso
+-- ----------------------------
+DROP TABLE IF EXISTS `permiso`;
+CREATE TABLE `permiso` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `empleado` INT(11) NOT NULL,
+  `dia` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dia_permiso_fk` (`dia`),
+  KEY `empleado_permiso_fk` (`empleado`),
+  CONSTRAINT `empleado_permiso_fk` FOREIGN KEY (`empleado`) REFERENCES `empleado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `dia_permiso_fk` FOREIGN KEY (`dia`) REFERENCES `dia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=latin1;

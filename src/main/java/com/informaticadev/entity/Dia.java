@@ -24,7 +24,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -53,9 +52,8 @@ public class Dia implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "nombre")
-    private String nombre;
+    private Character nombre;
     @Basic(optional = false)
     @NotNull
     @Column(name = "horaEn")
@@ -81,8 +79,12 @@ public class Dia implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dia1")
-    private List<Registro> registroList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dia")
+    private List<HoraExtra> horaExtraList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dia")
+    private List<Asistencia> asistenciaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dia")
+    private List<Permiso> permisoList;
     @JoinColumn(name = "horario", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Horario horario;
@@ -94,7 +96,7 @@ public class Dia implements Serializable {
         this.id = id;
     }
 
-    public Dia(Integer id, String nombre, Date horaEn, Date horaSa, Date horaRen, Date horaRsa, Date fecha) {
+    public Dia(Integer id, Character nombre, Date horaEn, Date horaSa, Date horaRen, Date horaRsa, Date fecha) {
         this.id = id;
         this.nombre = nombre;
         this.horaEn = horaEn;
@@ -102,6 +104,17 @@ public class Dia implements Serializable {
         this.horaRen = horaRen;
         this.horaRsa = horaRsa;
         this.fecha = fecha;
+    }
+    
+    public Dia(Integer id, Character nombre, Date horaEn, Date horaSa, Date horaRen, Date horaRsa, Date fecha, Horario h) {
+        this.id = id;
+        this.nombre = nombre;
+        this.horaEn = horaEn;
+        this.horaSa = horaSa;
+        this.horaRen = horaRen;
+        this.horaRsa = horaRsa;
+        this.fecha = fecha;
+        this.horario = h;
     }
 
     public Integer getId() {
@@ -112,11 +125,11 @@ public class Dia implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
+    public Character getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(Character nombre) {
         this.nombre = nombre;
     }
 
@@ -161,12 +174,30 @@ public class Dia implements Serializable {
     }
 
     @XmlTransient
-    public List<Registro> getRegistroList() {
-        return registroList;
+    public List<HoraExtra> getHoraExtraList() {
+        return horaExtraList;
     }
 
-    public void setRegistroList(List<Registro> registroList) {
-        this.registroList = registroList;
+    public void setHoraExtraList(List<HoraExtra> horaExtraList) {
+        this.horaExtraList = horaExtraList;
+    }
+
+    @XmlTransient
+    public List<Asistencia> getAsistenciaList() {
+        return asistenciaList;
+    }
+
+    public void setAsistenciaList(List<Asistencia> asistenciaList) {
+        this.asistenciaList = asistenciaList;
+    }
+
+    @XmlTransient
+    public List<Permiso> getPermisoList() {
+        return permisoList;
+    }
+
+    public void setPermisoList(List<Permiso> permisoList) {
+        this.permisoList = permisoList;
     }
 
     public Horario getHorario() {

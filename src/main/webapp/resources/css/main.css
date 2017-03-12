@@ -14,17 +14,45 @@ html, body {
     background: #DBEEFD;   
 }
 
+hr {
+    border: 0 none #D6564A;
+    border-top: 1px solid #D6564A;
+}
+
 #nuevo-empleado h3,#nuevo-empleado tbody td{
     color: #D6564A;    
 }
 
-hr {
-border: 0 none #D6564A;
-border-top: 1px solid #D6564A;
+#consulta h3{
+    color: #D6564A;        
 }
 
-#nuevo-empleado .table-hover tbody :hover{
-    background-color:  #333333;
+#consulta .table > thead > tr.info > th{
+    color: #FFFFFF;
+    background-color: #D6564A;        
+}
+
+#consulta .table-bordered > thead > tr > th, #consulta .table-bordered > tbody > tr > td{
+    border: 1px solid #2D1512;
+}
+
+#consulta .table-hover tbody :hover{
+    color: #FFFFFF;
+    background-color:  #D6564A;
+}
+
+#consulta .buscar{
+    color: #FFFFFF;
+    background-color:  #D6564A;
+}
+
+#consulta .pager li a{
+    color: #D6564A;    
+}
+
+#consulta .pager li a:hover{    
+    color: #FFFFFF;    
+    background-color:  #D6564A;
 }
 
 #form-new{
@@ -259,7 +287,7 @@ border-top: 1px solid #D6564A;
 
 
 
-#body-form label, #ubic-form-izq label, #data-cont label{
+#body-form label,#body-form2 label, #ubic-form-izq label, #data-cont label{
     color: #D6564A;
 }
 
